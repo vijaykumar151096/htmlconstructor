@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Templates from './Templates/templates.js';
+import Button from './Templates/Button.js';
 import './App.css';
 
 
@@ -16,6 +17,8 @@ function App() {
     	</span>
     	<span>
 	        <div id="outputhtml" > Response </div> 
+
+	        <button type="button" id="gitpush" class="dN" onClick={pushCodetoGit}>PushtoGIT</button>
     	</span>
     </div>
   );
@@ -25,7 +28,6 @@ const nameCapitalized = (name) => name.charAt(0).toUpperCase() + name.slice(1) ;
 
 function processJson()
 {
-	debugger;
 	try{
 		var jsonstring = document.getElementById('inputjson').value ;
 		var complete_structure = JSON.parse(jsonstring);
@@ -37,9 +39,28 @@ function processJson()
 			ReactDOM.render(html.render(), element);
 			document.getElementById('outputhtml').appendChild(element);
 		});
+		var buttonelement = document.createElement('div');
+		var button_html = new Button(complete_structure);
+		ReactDOM.render(button_html.render(), buttonelement);
+		document.getElementById('outputhtml').appendChild(buttonelement);
+		document.getElementById('gitpush').classList.remove('dN')	
 	} catch (e){
 		console.log(e);
 	}
+}
+
+function pushCodetoGit(){
+	console.log("hasi");
+}
+
+function writeToFile(){
+	<!-- debugger;
+	var fso = window.ActiveXObject("Scripting.FileSystemObject");  
+    var s = fso.CreateTextFile("C:\test.txt", "true");
+    s.writeline("HI");
+    s.writeline("Bye");
+    s.writeline("-----------------------------");
+    s.Close(); -->
 }
 
 export default App;
