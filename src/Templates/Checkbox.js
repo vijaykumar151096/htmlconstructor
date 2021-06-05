@@ -12,7 +12,7 @@ class Checkbox extends React.Component {
 	    				<input type="checkbox" id="{item.displayvalue}" name="{this.props.name}" value="{item.value}" />
 	    				<label for="{item.value}">{item.displayvalue}</label>
 	    			</div>
-    			)};
+    			)}
     	</div>
     );
   }

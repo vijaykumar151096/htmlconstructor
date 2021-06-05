@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import Templates from './Templates/templates.js';
 import Button from './Templates/Button.js';
 import './App.css';
+import './Templates/templates.css'
 
+const nameCapitalized = (name) => name.charAt(0).toUpperCase() + name.slice(1) ;
 
 function App() {
   return (
@@ -16,7 +18,7 @@ function App() {
 	        <button type="button" onClick={processJson}>Generate</button>
     	</span>
     	<span>
-	        <div id="outputhtml" > Response </div> 
+	        <div id="outputhtml"> </div> 
 
 	        <button type="button" id="gitpush" class="dN" onClick={pushCodetoGit}>PushtoGIT</button>
     	</span>
@@ -24,13 +26,11 @@ function App() {
   );
 }
 
-const nameCapitalized = (name) => name.charAt(0).toUpperCase() + name.slice(1) ;
-
 function processJson()
 {
 	try{
 		var jsonstring = document.getElementById('inputjson').value ;
-		var complete_structure = JSON.parse(jsonstring);
+		var complete_structure = JSON.parse(jsonstring); 	
 
 		var attribute_structure = complete_structure.Attributes;
 		attribute_structure.forEach( function(structure){
@@ -50,17 +50,45 @@ function processJson()
 }
 
 function pushCodetoGit(){
-	console.log("hasi");
+
+	var email = "sureshvijaykumar1996@gmail.com";
+	var token = "token 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";
+	var repositoryname = "";
+	var username = "vijaykumar151096";
+
+	var url = "https://api.github.com/repos/vijaykumar151096/htmlconstructor/contents/src/Templates/response.html";
+	var xhr = new XMLHttpRequest();
+	xhr.open("PUT", url);
+	var doc_content = document.getElementById('outputhtml').innerHTML;
+	var content = btoa(unescape(encodeURIComponent(doc_content)));
+
+	xhr.setRequestHeader("Accept", "application/vnd.github.v3+json");
+	xhr.setRequestHeader("Authorization", token);
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	xhr.onreadystatechange = function () {
+	   if (xhr.readyState === 4) {
+	      console.log(xhr.status);
+	      debugger;
+	      console.log(xhr.responseText);
+	   }};
+
+	var data = {
+	    "message": "api commit 1",
+	    "content": content ,
+	    "committer": {
+	        "name": username,
+	        "email": email,
+	        "author": {
+	            "name": username,
+	            "email": email
+	        }
+	    }
+	};
+
+	xhr.send(JSON.stringify(data) );
+
 }
 
-function writeToFile(){
-	<!-- debugger;
-	var fso = window.ActiveXObject("Scripting.FileSystemObject");  
-    var s = fso.CreateTextFile("C:\test.txt", "true");
-    s.writeline("HI");
-    s.writeline("Bye");
-    s.writeline("-----------------------------");
-    s.Close(); -->
-}
 
 export default App;
