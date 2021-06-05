@@ -10,25 +10,33 @@ const nameCapitalized = (name) => name.charAt(0).toUpperCase() + name.slice(1) ;
 function App() {
   return (
     <div className="App">
-    	<span>
-	        <h1> HTML Construction </h1>
-	        <center>
-	        	<textarea class="jsontextarea" id="inputjson" name="inputjson" rows="10" cols="50"></textarea>
-	        </center>
-	        <button type="button" onClick={processJson}>Generate</button>
-    	</span>
-    	<span>
-	        <div id="outputhtml"> </div> 
-
-	        <button type="button" id="gitpush" class="dN" onClick={pushCodetoGit}>PushtoGIT</button>
-    	</span>
+    	<h1> JSON to HTML Converter </h1>
+    	<div class="split left">
+		   <div class="">
+		      <center>
+		         <h4 align="left"> JSON:  </h4>
+		         <textarea  class="jsontextarea" id="inputjson" name="inputjson" rows="20" cols="50"></textarea>
+		      </center>
+		      <br/><button type="button" onClick={processJson}>Generate</button>
+		   </div>
+		</div>
+		<div class="split right">
+		   <div class="">
+		      <span>
+		         <div id="outputhtml" align="left"> Preview</div><br/>
+		      </span>
+			 <button type="button" id="gitpush" class="dN" onClick={pushCodetoGit}>PushtoGIT</button>
+		   </div>
+		</div>
     </div>
   );
 }
 
+
 function processJson()
 {
 	try{
+		document.getElementById('outputhtml').innerHTML = "";
 		var jsonstring = document.getElementById('inputjson').value ;
 		var complete_structure = JSON.parse(jsonstring); 	
 
@@ -45,6 +53,7 @@ function processJson()
 		document.getElementById('outputhtml').appendChild(buttonelement);
 		document.getElementById('gitpush').classList.remove('dN')	
 	} catch (e){
+		window.alert("Incorrect JSON");
 		console.log(e);
 	}
 }
@@ -52,8 +61,7 @@ function processJson()
 function pushCodetoGit(){
 
 	var email = "sureshvijaykumar1996@gmail.com";
-	var token = "token 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";
-	var repositoryname = "";
+	var token = "token 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";
 	var username = "vijaykumar151096";
 
 	var url = "https://api.github.com/repos/vijaykumar151096/htmlconstructor/contents/src/Templates/response.html";
@@ -69,12 +77,11 @@ function pushCodetoGit(){
 	xhr.onreadystatechange = function () {
 	   if (xhr.readyState === 4) {
 	      console.log(xhr.status);
-	      debugger;
-	      console.log(xhr.responseText);
+	      window.alert(xhr.responseText);
 	   }};
 
 	var data = {
-	    "message": "api commit 1",
+	    "message": "Response HTML Constructed",
 	    "content": content ,
 	    "committer": {
 	        "name": username,

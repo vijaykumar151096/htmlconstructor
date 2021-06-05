@@ -13,6 +13,7 @@ class Radio extends React.Component {
 	    				<label for="{item.value}">{item.displayvalue}</label>
 	    			</div>
     			)}
+        <br/>
     	</span>
     );
   }
